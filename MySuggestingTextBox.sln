@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySuggestingTextBox", "MySuggestionTextBox\MySuggestingTextBox.csproj", "{5B24F9F0-DA9B-4C98-A76D-7749996C7348}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nvd", "Nvd\Nvd.csproj", "{C860F8B3-C0A1-467E-BD59-D81EEE81F57F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B24F9F0-DA9B-4C98-A76D-7749996C7348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B24F9F0-DA9B-4C98-A76D-7749996C7348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B24F9F0-DA9B-4C98-A76D-7749996C7348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B24F9F0-DA9B-4C98-A76D-7749996C7348}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C860F8B3-C0A1-467E-BD59-D81EEE81F57F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C860F8B3-C0A1-467E-BD59-D81EEE81F57F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C860F8B3-C0A1-467E-BD59-D81EEE81F57F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C860F8B3-C0A1-467E-BD59-D81EEE81F57F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
