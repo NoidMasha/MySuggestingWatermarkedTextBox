@@ -305,7 +305,7 @@
             //Override IsInputKey
             protected override bool IsInputKey(System.Windows.Forms.Keys keyData)
             {
-                if (keyData == System.Windows.Forms.Keys.Tab)
+                if (keyData == System.Windows.Forms.Keys.Tab || keyData == System.Windows.Forms.Keys.Up)
                 {
                     return true;
                 }
@@ -323,6 +323,12 @@
                 {
                     this.Items.Clear();
                     this.Visible = false;
+                }
+                else if (e.KeyData == System.Windows.Forms.Keys.Up && this.SelectedIndex == 0)
+                {
+                    this.Items.Clear();
+                    this.Visible = false;
+                    baseForm.ActiveControl = textbox;
                 }
                 else
                 {
