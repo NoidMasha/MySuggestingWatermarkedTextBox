@@ -18,9 +18,11 @@ namespace MySuggestingTextBox
             
             //textBox1.ListItems = listItems;
             //textBox2.ListItems = listItems;
-            System.Collections.Generic.List<string> listItems = new System.Collections.Generic.List<string> { "Navid", "Hamed", "Alireza", "Saeed", "Nahid", "ALI", "Hadi", "Narges", "Hamid" };
+            System.Collections.Generic.List<string> listItems = new System.Collections.Generic.List<string> { "Water","Wall","waterhas","Navid", "Hamed", "Alireza", "Saeed", "Nahid", "ALI", "Hadi", "Narges", "Hamid" };
             //object[] listItems = new object[] { "Navid", "Hamed", "Alireza", "Saeed", "Nahid", "ALI", "Hadi", "Narges", "Hamid" };
+            textBox1.ListItems = listItems;
             textBox2.ListItems = listItems;
+            textBox3.ListItems = listItems;
         }
 
 

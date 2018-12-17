@@ -2,14 +2,10 @@
 {
     public class TextBox : System.Windows.Forms.TextBox
     {
+        private System.Drawing.Font oldFont = null;
+        private bool waterMarkTextEnabled = false;
 
-        public TextBox() : base()
-        {
-            list = new textBoxList();
-            list.TabStop = false;
-            list.Visible = false;
-        }
-
+        #region Attributes 
         private textBoxList list;
         private System.Windows.Forms.Form baseForm;
         private System.Collections.Generic.List<string> listItems = null;
@@ -19,16 +15,165 @@
         /// </summary>
         public System.Collections.Generic.List<string> ListItems
         {
-            get
-            {
-                return listItems;
-            }
+            get { return listItems; }
             set
             {
                 listItems = value;
             }
         }
 
+        private System.Drawing.Color listItemsForeColor;
+        public System.Drawing.Color ListItemsForeColor
+        {
+            get { return listItemsForeColor; }
+            set
+            {
+                listItemsForeColor = value;
+            }
+        }
+
+        private System.Drawing.Color listItemsBackColor;
+        public System.Drawing.Color ListItemsBackColor
+        {
+            get { return listItemsBackColor; }
+            set
+            {
+                listItemsBackColor = value;
+            }
+        }
+
+        private System.Drawing.Font listItemsFont;
+        public System.Drawing.Font ListItemsFont
+        {
+            get { return listItemsFont; }
+            set
+            {
+                listItemsFont = value;
+            }
+        }
+
+        private bool listBoxDynamicWidth = false;
+        public bool ListBoxDynamicWidth
+        {
+            get { return listBoxDynamicWidth; }
+            set
+            {
+                listBoxDynamicWidth = value;
+            }
+        }
+
+        private System.Drawing.Color waterMarkColor = System.Drawing.Color.Gray;
+        public System.Drawing.Color WaterMarkColor
+        {
+            get { return waterMarkColor; }
+            set
+            {
+                waterMarkColor = value;
+                Invalidate();
+            }
+        }
+
+        private string waterMarkText = "Water Mark";
+        public string WaterMarkText
+        {
+            get { return waterMarkText; }
+            set
+            {
+                waterMarkText = value;
+                Invalidate();
+            }
+        }
+
+        #endregion \Attributes
+
+        //Default constructor
+        public TextBox() : base()
+        {
+            list = new textBoxList();
+            list.TabStop = false;
+            list.Visible = false;
+
+            //for watermark**********
+            JoinEvents(true);
+            //***********************
+        }
+
+        #region WaterMark
+        //Override OnCreateControl 
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            WaterMark_Toggel(null, null);
+        }
+
+        //Override OnPaint
+        protected override void OnPaint(System.Windows.Forms.PaintEventArgs args)
+        {
+            // Use the same font that was defined in base class
+            System.Drawing.Font drawFont = new System.Drawing.Font(Font.FontFamily,
+                Font.Size, Font.Style | System.Drawing.FontStyle.Italic, Font.Unit);
+            //Create new brush with gray color or 
+            System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(WaterMarkColor);//use Water mark color
+            //Draw Text or WaterMark
+            args.Graphics.DrawString((waterMarkTextEnabled ? WaterMarkText : Text),
+                drawFont, drawBrush, new System.Drawing.PointF(0.0F, 0.0F));
+            base.OnPaint(args);
+        }
+
+        private void JoinEvents(bool join)
+        {
+            if (join)
+            {
+                this.TextChanged += new System.EventHandler(this.WaterMark_Toggel);
+                this.LostFocus += new System.EventHandler(this.WaterMark_Toggel);
+                this.FontChanged += new System.EventHandler(this.WaterMark_FontChanged);
+            }
+        }
+
+        private void WaterMark_Toggel(object sender, System.EventArgs args)
+        {
+            if (this.Text.Length <= 0)
+                EnableWaterMark();
+            else
+                DisbaleWaterMark();
+        }
+
+        private void EnableWaterMark()
+        {
+            //Save current font until returning the UserPaint style to false (NOTE:
+            //It is a try and error advice)
+            oldFont = new System.Drawing.Font(Font.FontFamily, Font.Size, Font.Style,
+               Font.Unit);
+            //Enable OnPaint event handler
+            this.SetStyle(System.Windows.Forms.ControlStyles.UserPaint, true);
+            this.waterMarkTextEnabled = true;
+            //Triger OnPaint immediatly
+            Refresh();
+        }
+
+        private void DisbaleWaterMark()
+        {
+            //Disbale OnPaint event handler
+            this.waterMarkTextEnabled = false;
+            this.SetStyle(System.Windows.Forms.ControlStyles.UserPaint, false);
+            //Return back oldFont if existed
+            if (oldFont != null)
+                this.Font = new System.Drawing.Font(oldFont.FontFamily, oldFont.Size,
+                    oldFont.Style, oldFont.Unit);
+        }
+
+        private void WaterMark_FontChanged(object sender, System.EventArgs args)
+        {
+            if (waterMarkTextEnabled)
+            {
+                oldFont = new System.Drawing.Font(Font.FontFamily, Font.Size, Font.Style,
+                    Font.Unit);
+                Refresh();
+            }
+        }
+#endregion \WaterMark
+
+        //Override OnEnter
         protected override void OnEnter(System.EventArgs e)
         {
             base.OnEnter(e);
@@ -39,13 +184,14 @@
                 list.textbox = this;
                 list.TabIndex = this.TabIndex;
                 baseForm.Controls.Add(list);
-                list.Font = this.Font;
-                list.BackColor = this.BackColor;
-                list.ForeColor = this.ForeColor;
+                if (listItemsFont == null) list.Font = this.Font; else list.Font = listItemsFont;
+                if (listItemsBackColor == null) list.BackColor = this.BackColor; else list.BackColor = listItemsBackColor;
+                if (listItemsForeColor == null) list.ForeColor = this.ForeColor; else list.ForeColor = listItemsForeColor;
                 list.Location = new System.Drawing.Point(this.Location.X, this.Location.Y + this.Size.Height);
             }
         }
 
+        //Override IsInputKey
         protected override bool IsInputKey(System.Windows.Forms.Keys keyData)
         {
             if (keyData == System.Windows.Forms.Keys.Tab)
@@ -58,6 +204,7 @@
             }
         }
 
+        //Override OnKeyPress
         protected override void OnKeyPress(System.Windows.Forms.KeyPressEventArgs e)
         {
             //base.OnKeyPress(e);
@@ -72,7 +219,7 @@
         }
 
 
-
+        //Override OnKeyUp
         protected override void OnKeyUp(System.Windows.Forms.KeyEventArgs e)
         {
             if (e.KeyData == System.Windows.Forms.Keys.Down && list.Visible)
@@ -104,7 +251,7 @@
 
             if (string.IsNullOrWhiteSpace(this.Text)) return;
 
-            //int maxLength = 0;
+            int maxLength = 0;
             foreach (string item in listItems)
             {
                 if (item.ToLower().StartsWith(this.Text.ToLower()))
@@ -114,16 +261,26 @@
                         list.Visible = true;
                         list.BringToFront();
                     }
-                    //if (item.Length > maxLength) maxLength = item.Length;
                     list.Items.Add(item);
-                    //list.Size = new System.Drawing.Size((maxLength + 1) * (int)System.Math.Round(list.Font.SizeInPoints), (list.Items.Count + 1) * list.Font.Height);
-                    list.Size = new System.Drawing.Size(this.Size.Width, (list.Items.Count + 1) * list.Font.Height);
+                    if (listBoxDynamicWidth)
+                    {
+                        if (item.Length > maxLength) maxLength = item.Length;
+                        list.Size = new System.Drawing.Size((maxLength) * (int)System.Math.Floor(list.Font.SizeInPoints), (list.Items.Count + 1) * list.Font.Height);
+                    }
+                    else
+                    {
+                        list.Size = new System.Drawing.Size(this.Size.Width, (list.Items.Count + 1) * list.Font.Height);
+                    }
                 }
             }
         }
 
+
+
+        //ListBox that shows up under textbox
         class textBoxList : System.Windows.Forms.ListBox
         {
+            //Default constructor
             public textBoxList() : base()
             {
 
@@ -131,6 +288,8 @@
 
             public TextBox textbox;
             public System.Windows.Forms.Form baseForm;
+
+            //Override OnKeyUp
             protected override void OnKeyUp(System.Windows.Forms.KeyEventArgs e)
             {
                 //base.OnKeyUp(e);
@@ -143,6 +302,7 @@
                 }
             }
 
+            //Override IsInputKey
             protected override bool IsInputKey(System.Windows.Forms.Keys keyData)
             {
                 if (keyData == System.Windows.Forms.Keys.Tab)
@@ -155,6 +315,7 @@
                 }
             }
 
+            //OnKeyDown
             protected override void OnKeyDown(System.Windows.Forms.KeyEventArgs e)
             {
                 //base.OnKeyDown(e);
@@ -169,6 +330,7 @@
                 }
             }
 
+            //Override OnDoubleClick
             protected override void OnDoubleClick(System.EventArgs e)
             {
                 //base.OnDoubleClick(e);
