@@ -62,6 +62,16 @@
             }
         }
 
+        private int maxItemesToShow = 10;
+        public int MaxItemesToShow
+        {
+            get { return maxItemesToShow; }
+            set
+            {
+                if (value > 0) maxItemesToShow = value; else maxItemesToShow = 1;
+            }
+        }
+
         private System.Drawing.Color waterMarkColor = System.Drawing.Color.Gray;
         public System.Drawing.Color WaterMarkColor
         {
@@ -252,6 +262,8 @@
             if (string.IsNullOrWhiteSpace(this.Text)) return;
 
             int maxLength = 0;
+            int itemsToShow = 0;
+            int scrollbarWidth = 0;
             foreach (string item in listItems)
             {
                 if (item.ToLower().StartsWith(this.Text.ToLower()))
@@ -262,14 +274,27 @@
                         list.BringToFront();
                     }
                     list.Items.Add(item);
-                    if (listBoxDynamicWidth)
+
+                    if (list.Items.Count >= maxItemesToShow)
                     {
-                        if (item.Length > maxLength) maxLength = item.Length;
-                        list.Size = new System.Drawing.Size((maxLength) * (int)System.Math.Floor(list.Font.SizeInPoints), (list.Items.Count + 1) * list.Font.Height);
+                        itemsToShow = maxItemesToShow;
+                        scrollbarWidth = System.Windows.Forms.SystemInformation.VerticalScrollBarWidth;
                     }
                     else
                     {
-                        list.Size = new System.Drawing.Size(this.Size.Width, (list.Items.Count + 1) * list.Font.Height);
+                        itemsToShow = list.Items.Count;
+                        scrollbarWidth = 0;
+                    }
+
+                    if (listBoxDynamicWidth)
+                    {
+                        if (item.Length > maxLength) maxLength = item.Length;
+                        list.Size = new System.Drawing.Size((maxLength) * (int)System.Math.Floor(list.Font.SizeInPoints)+ scrollbarWidth
+                            , (itemsToShow + 1) * list.Font.Height);
+                    }
+                    else
+                    {
+                        list.Size = new System.Drawing.Size(this.Size.Width, (itemsToShow + 1) * list.Font.Height);
                     }
                 }
             }

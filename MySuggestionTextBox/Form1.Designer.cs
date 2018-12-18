@@ -28,25 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new Nvd.Windows.Forms.TextBox();
-            this.textBox2 = new Nvd.Windows.Forms.TextBox();
             this.textBox3 = new Nvd.Windows.Forms.TextBox();
+            this.textBox2 = new Nvd.Windows.Forms.TextBox();
+            this.textBox1 = new Nvd.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // textBox1
+            // textBox3
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.textBox1.ListBoxDynamicWidth = false;
-            this.textBox1.ListItems = null;
-            this.textBox1.ListItemsBackColor = System.Drawing.Color.Aqua;
-            this.textBox1.ListItemsFont = null;
-            this.textBox1.ListItemsForeColor = System.Drawing.Color.Red;
-            this.textBox1.Location = new System.Drawing.Point(13, 13);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.WaterMarkColor = System.Drawing.Color.Gray;
-            this.textBox1.WaterMarkText = "BC FC Changed";
+            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.textBox3.ListBoxDynamicWidth = true;
+            this.textBox3.ListItems = null;
+            this.textBox3.ListItemsBackColor = System.Drawing.Color.Empty;
+            this.textBox3.ListItemsFont = null;
+            this.textBox3.ListItemsForeColor = System.Drawing.Color.Empty;
+            this.textBox3.Location = new System.Drawing.Point(273, 12);
+            this.textBox3.MaxItemesToShow = 2;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 20);
+            this.textBox3.TabIndex = 2;
+            this.textBox3.WaterMarkColor = System.Drawing.Color.Gray;
+            this.textBox3.WaterMarkText = "Dynamic";
             // 
             // textBox2
             // 
@@ -57,26 +58,28 @@
             this.textBox2.ListItemsFont = null;
             this.textBox2.ListItemsForeColor = System.Drawing.Color.Empty;
             this.textBox2.Location = new System.Drawing.Point(139, 12);
+            this.textBox2.MaxItemesToShow = 10;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 1;
             this.textBox2.WaterMarkColor = System.Drawing.Color.Gray;
             this.textBox2.WaterMarkText = "Nothing";
             // 
-            // textBox3
+            // textBox1
             // 
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.textBox3.ListBoxDynamicWidth = true;
-            this.textBox3.ListItems = null;
-            this.textBox3.ListItemsBackColor = System.Drawing.Color.Empty;
-            this.textBox3.ListItemsFont = null;
-            this.textBox3.ListItemsForeColor = System.Drawing.Color.Empty;
-            this.textBox3.Location = new System.Drawing.Point(266, 12);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 2;
-            this.textBox3.WaterMarkColor = System.Drawing.Color.Gray;
-            this.textBox3.WaterMarkText = "Dynamic";
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.textBox1.ListBoxDynamicWidth = false;
+            this.textBox1.ListItems = null;
+            this.textBox1.ListItemsBackColor = System.Drawing.Color.Aqua;
+            this.textBox1.ListItemsFont = null;
+            this.textBox1.ListItemsForeColor = System.Drawing.Color.Red;
+            this.textBox1.Location = new System.Drawing.Point(13, 13);
+            this.textBox1.MaxItemesToShow = 2;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.WaterMarkColor = System.Drawing.Color.Gray;
+            this.textBox1.WaterMarkText = "BC FC Changed";
             // 
             // Form1
             // 
